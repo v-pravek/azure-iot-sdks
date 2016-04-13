@@ -7,10 +7,10 @@ project(azure_iot_sdks)
 #making a nice global variable to know if we are on linux or not.
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     set(LINUX TRUE)
-	#on Linux, enable valgrind
-	#these commands (MEMORYCHECK...) need to apear BEFORE include(CTest) or they will not have any effect
-	find_program(MEMORYCHECK_COMMAND valgrind)	
-	set(MEMORYCHECK_COMMAND_OPTIONS "--trace-children=yes --leak-check=full --error-exitcode=1")
+    #on Linux, enable valgrind
+    #these commands (MEMORYCHECK...) need to apear BEFORE include(CTest) or they will not have any effect
+    find_program(MEMORYCHECK_COMMAND valgrind)	
+    set(MEMORYCHECK_COMMAND_OPTIONS "--trace-children=yes --leak-check=full --error-exitcode=1")
 endif()
 
 include (CTest)
@@ -160,7 +160,7 @@ else()
     set(THREAD_C_FILE ${SHARED_UTIL_ADAPTER_FOLDER}/threadapi_pthreads.c)
 endif()
 
-if(${run_e2e_tests})
+if(${run_e2e_tests} AND NOT ${skip_unittests})
     add_subdirectory(testtools)
 endif()
 
@@ -173,5 +173,3 @@ endif()
 if("${build_javawrapper}" STREQUAL "ON")	
      add_subdirectory(../javawrapper/device/iothub_client_javawrapper javawrapper)
 endif()
-
-
